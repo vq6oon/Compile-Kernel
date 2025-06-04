@@ -53,8 +53,8 @@ rm -rf "$OUT_DIR"
 mkdir -p "$OUT_DIR"
 
 # Export build env
-export KBUILD_BUILD_USER="Revann"
-export KBUILD_BUILD_HOST="VannXavero."
+export KBUILD_BUILD_USER="$MAKER"
+export KBUILD_BUILD_HOST="$HOSTNAME"
 export USE_CCACHE=1
 ccache -M 30G
 export PATH="$CLANGDIR/bin:$PATH"
