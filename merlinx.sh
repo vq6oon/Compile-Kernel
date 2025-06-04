@@ -9,6 +9,9 @@ THREADS=$(nproc --all)
 CLANGDIR="/workspace/Linux-Ubuntu/clang"
 DEFCONFIG_FILE="$KERNEL_DIR/arch/arm64/configs/$CONFIG_NAME"
 DEVICE_CODENAME="merlin"
+HOSTNAME="vq6oon"
+MAKER="Lampion"
+KERNEL_VERSION="4.14.XXX"
 
 # Telegram
 BOT_TOKEN=""
@@ -36,10 +39,13 @@ RAW_LOCALVERSION=$(grep -oP 'CONFIG_LOCALVERSION="\K[^"]+' "$DEFCONFIG_FILE")
 KERNEL_NAME=$(echo "$RAW_LOCALVERSION" | sed 's/^-//')
 [ -z "$KERNEL_NAME" ] && KERNEL_NAME="CustomKernel"
 
+# Remove Anykernel3
+rm -rf AnyKernel3
+
 # Clone AnyKernel3 jika belum ada
 if [ ! -d "$ANYKERNEL_DIR" ]; then
     send_telegram_message "📥 *Mengkloning AnyKernel3...*"
-    git clone https://github.com/vq6oon/AnyKernel3 "$ANYKERNEL_DIR"
+    git clone https://github.com/vq6oon/AnyKernel3 -b merlinx "$ANYKERNEL_DIR"
 fi
 
 # Bersihkan output lama
@@ -56,6 +62,7 @@ export PATH="$CLANGDIR/bin:$PATH"
 # Info awal
 send_telegram_message "🔧 *Build Kernel Dimulai!*  
 📱 Device: \`$DEVICE_CODENAME\`  
+🖥️ Host: \`$HOSTNAME\`  
 🧬 Kernel Name: \`$KERNEL_NAME\`  
 ⚙️ Defconfig: \`$CONFIG_NAME\`"
 
@@ -93,16 +100,18 @@ if [ -f "$KERNEL_IMAGE" ]; then
     cp "$KERNEL_IMAGE" "$ANYKERNEL_DIR/Image.gz-dtb"
 
     cd "$ANYKERNEL_DIR" || exit 1
-    ZIP_NAME="${KERNEL_NAME}-$(date +%Y%m%d-%H%M).zip"
+    ZIP_NAME="${KERNEL_NAME}-$CODENAME-$(date +%Y%m%d-%H%M).zip"
     zip -r9 "$ZIP_NAME" * > /dev/null 2>&1
 
     if [ -f "$ZIP_NAME" ]; then
         ZIP_SIZE=$(du -h "$ZIP_NAME" | cut -f1)
         ZIP_CHECKSUM=$(sha256sum "$ZIP_NAME" | awk '{print $1}')
         COMPILER_VERSION=$("$CLANGDIR/bin/clang" --version | head -n1)
-        KERNEL_VERSION=4.19.306
+        KERNEL_VERSION=$KERNEL_VERSION
 
-        CAPTION="✅ *Build Sukses!*  
+        CAPTION="✅ *Build Selesai Bang!*  
+🖥️ *MADE BY:* \`$MAKER\`  
+🖥️ *Host:* \`$HOSTNAME\`  
 🧬 *Kernel Name:* \`$KERNEL_NAME\`  
 📱 *Device:* \`$DEVICE_CODENAME\`  
 🧾 *Kernel Version:* \`$KERNEL_VERSION\`
