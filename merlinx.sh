@@ -9,7 +9,7 @@ THREADS=$(nproc --all)
 CLANGDIR=""
 DEFCONFIG_FILE="$KERNEL_DIR/arch/arm64/configs/$CONFIG_NAME"
 DEVICE_CODENAME="merlin"
-HOSTNAME="vq6oon"
+HOSTNAME="Ubuntu"
 MAKER="Lampion"
 KERNEL_VERSION="4.14.XXX"
 
@@ -123,7 +123,7 @@ begonia-kernel
 
 Active 
 
-        CAPTION="✅ *Build Selesai Bang!*  
+        CAPTION="✅ *Build Selesai Bang!!!*  
 🖥️ *MADE BY:* \`$MAKER\`  
 🖥️ *Host:* \`$HOSTNAME\`  
 🧬 *Kernel Name:* \`$KERNEL_NAME\`  
