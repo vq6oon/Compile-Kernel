@@ -71,7 +71,8 @@ ccache -M 30G
 export PATH="$CLANGDIR/bin:$PATH"
 
 # Info awal
-send_telegram_message "🔧 *Build Kernel Dimulai!*  
+send_telegram_message "<~---------------------------------------~>
+🔧 *Build Kernel Dimulai!*  
 📱 Device: \`$DEVICE_CODENAME\`  
 🖥️ Host: \`$HOSTNAME\`  
 🧬 Kernel Name: \`$KERNEL_NAME\`  
@@ -119,14 +120,7 @@ if [ -f "$KERNEL_IMAGE" ]; then
         ZIP_CHECKSUM=$(sha256sum "$ZIP_NAME" | awk '{print $1}')
         COMPILER_VERSION=$("$CLANGDIR/bin/clang" --version | head -n1)
         KERNEL_VERSION=$KERNEL_VERSION
-June 8, 2025 14:39
-main*
-
-Uncommitted changes
-begonia-kernel
-
-Active 
-
+        
         CAPTION="✅ *Build Selesai Bang!!!*  
 🖥️ *MADE BY:* \`$MAKER\`  
 🖥️ *Host:* \`$HOSTNAME\`  
@@ -137,7 +131,8 @@ Active
 📦 \`$ZIP_NAME\` ($ZIP_SIZE)  
 ⏱️ ${BUILD_DURATION}s  
 🛠 Compiler: \`$COMPILER_VERSION\`  
-🔐 SHA256: \`${ZIP_CHECKSUM:0:8}...\`"
+🔐 SHA256: \`${ZIP_CHECKSUM:0:8}...\`
+<~---------------------------------------~>"
 
         send_telegram_message "🎉 *ZIP Berhasil Dibuat!*"
         send_telegram_file "$ZIP_NAME" "$CAPTION"
