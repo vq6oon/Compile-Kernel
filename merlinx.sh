@@ -6,7 +6,7 @@ OUT_DIR=$KERNEL_DIR/out
 ANYKERNEL_DIR=$KERNEL_DIR/AnyKernel3
 CONFIG_NAME=merlin_defconfig
 THREADS=$(nproc --all)
-CLANGDIR="/workspace/Linux-Ubuntu/clang"
+CLANGDIR=""
 DEFCONFIG_FILE="$KERNEL_DIR/arch/arm64/configs/$CONFIG_NAME"
 DEVICE_CODENAME="merlin"
 HOSTNAME="vq6oon"
@@ -17,10 +17,16 @@ KERNEL_VERSION="4.14.XXX"
 BOT_TOKEN=""
 CHAT_ID=""
 
+# Telegram Ke Grub
+BOT_TOKEN=""
+CHAT_ID=""
+MESSAGE_THREAD_ID=""
+
 # Fungsi kirim pesan ke Telegram
 send_telegram_message() {
     curl -s -X POST "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
         -d "chat_id=$CHAT_ID" \
+        -d "message_thread_id=$MESSAGE_THREAD_ID" \
         -d "text=$1" \
         -d "parse_mode=Markdown"
 }
@@ -30,6 +36,7 @@ send_telegram_file() {
     curl -s -X POST "https://api.telegram.org/bot$BOT_TOKEN/sendDocument" \
         -F "chat_id=$CHAT_ID" \
         -F "document=@$1" \
+        -F "message_thread_id=$MESSAGE_THREAD_ID" \
         -F "caption=$2" \
         -F "parse_mode=Markdown"
 }
@@ -108,6 +115,13 @@ if [ -f "$KERNEL_IMAGE" ]; then
         ZIP_CHECKSUM=$(sha256sum "$ZIP_NAME" | awk '{print $1}')
         COMPILER_VERSION=$("$CLANGDIR/bin/clang" --version | head -n1)
         KERNEL_VERSION=$KERNEL_VERSION
+June 8, 2025 14:39
+main*
+
+Uncommitted changes
+begonia-kernel
+
+Active 
 
         CAPTION="✅ *Build Selesai Bang!*  
 🖥️ *MADE BY:* \`$MAKER\`  
