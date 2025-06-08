@@ -46,8 +46,12 @@ RAW_LOCALVERSION=$(grep -oP 'CONFIG_LOCALVERSION="\K[^"]+' "$DEFCONFIG_FILE")
 KERNEL_NAME=$(echo "$RAW_LOCALVERSION" | sed 's/^-//')
 [ -z "$KERNEL_NAME" ] && KERNEL_NAME="CustomKernel"
 
-# Remove Anykernel3
-rm -rf AnyKernel3
+# Remove Anykernel3 Jika Ada
+if [ -d "$ANYKERNEL_DIR" ]; then
+    echo "Direktori AnyKernel3 ditemukan. Menghapus..."
+    rm -rf "$ANYKERNEL_DIR"
+    echo "AnyKernel3 berhasil dihapus."
+fi
 
 # Clone AnyKernel3 jika belum ada
 if [ ! -d "$ANYKERNEL_DIR" ]; then
