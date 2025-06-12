@@ -10,8 +10,8 @@ CLANGDIR=""
 DEFCONFIG_FILE="$KERNEL_DIR/arch/arm64/configs/$CONFIG_NAME"
 DEVICE_CODENAME="merlin"
 HOSTNAME=""
-MAKER="Lampion"
-KERNEL_VERSION="4.14.XXX"
+MAKER=""
+KERNEL_VERSION=""
 
 # Telegram
 BOT_TOKEN=""
@@ -104,7 +104,7 @@ if [ -f "$KERNEL_IMAGE" ]; then
     cp "$KERNEL_IMAGE" "$ANYKERNEL_DIR/Image.gz-dtb"
 
     cd "$ANYKERNEL_DIR" || exit 1
-    ZIP_NAME="${KERNEL_NAME}-$DEVICE_CODENAME-$(date +%Y%m%d-%H%M).zip"
+    ZIP_NAME="$KERNEL_VERSION-${KERNEL_NAME}-$DEVICE_CODENAME-$(date +%Y%m%d-%H%M).zip"
     zip -r9 "$ZIP_NAME" * > /dev/null 2>&1
 
     if [ -f "$ZIP_NAME" ]; then
