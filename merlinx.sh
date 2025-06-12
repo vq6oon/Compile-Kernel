@@ -9,7 +9,7 @@ THREADS=$(nproc --all)
 CLANGDIR=""
 DEFCONFIG_FILE="$KERNEL_DIR/arch/arm64/configs/$CONFIG_NAME"
 DEVICE_CODENAME="merlin"
-HOSTNAME="Ubuntu"
+HOSTNAME=""
 MAKER="Lampion"
 KERNEL_VERSION="4.14.XXX"
 
@@ -46,18 +46,9 @@ RAW_LOCALVERSION=$(grep -oP 'CONFIG_LOCALVERSION="\K[^"]+' "$DEFCONFIG_FILE")
 KERNEL_NAME=$(echo "$RAW_LOCALVERSION" | sed 's/^-//')
 [ -z "$KERNEL_NAME" ] && KERNEL_NAME="CustomKernel"
 
-# Remove Anykernel3 Jika Ada
-if [ -d "$ANYKERNEL_DIR" ]; then
-    echo "Direktori AnyKernel3 ditemukan. Menghapus..."
+# Fix Double Kernel
     rm -rf "$ANYKERNEL_DIR"
-    echo "AnyKernel3 berhasil dihapus."
-fi
-
-# Clone AnyKernel3 jika belum ada
-if [ ! -d "$ANYKERNEL_DIR" ]; then
-    send_telegram_message "📥 *Mengkloning AnyKernel3...*"
     git clone https://github.com/vq6oon/AnyKernel3 -b merlinx "$ANYKERNEL_DIR"
-fi
 
 # Bersihkan output lama
 rm -rf "$OUT_DIR"
@@ -71,7 +62,8 @@ ccache -M 30G
 export PATH="$CLANGDIR/bin:$PATH"
 
 # Info awal
-send_telegram_message "<~---------------------------------------~>
+send_telegram_message "
+~~~< *Kurap1ka Compile* >~~~
 🔧 *Build Kernel Dimulai!*  
 📱 Device: \`$DEVICE_CODENAME\`  
 🖥️ Host: \`$HOSTNAME\`  
@@ -112,7 +104,7 @@ if [ -f "$KERNEL_IMAGE" ]; then
     cp "$KERNEL_IMAGE" "$ANYKERNEL_DIR/Image.gz-dtb"
 
     cd "$ANYKERNEL_DIR" || exit 1
-    ZIP_NAME="${KERNEL_NAME}-$CODENAME-$(date +%Y%m%d-%H%M).zip"
+    ZIP_NAME="${KERNEL_NAME}-$DEVICE_CODENAME-$(date +%Y%m%d-%H%M).zip"
     zip -r9 "$ZIP_NAME" * > /dev/null 2>&1
 
     if [ -f "$ZIP_NAME" ]; then
@@ -122,7 +114,7 @@ if [ -f "$KERNEL_IMAGE" ]; then
         KERNEL_VERSION=$KERNEL_VERSION
         
         CAPTION="✅ *Build Selesai Bang!!!*  
-🖥️ *MADE BY:* \`$MAKER\`  
+🖥️ *Made By:* \`$MAKER\`  
 🖥️ *Host:* \`$HOSTNAME\`  
 🧬 *Kernel Name:* \`$KERNEL_NAME\`  
 📱 *Device:* \`$DEVICE_CODENAME\`  
@@ -132,7 +124,7 @@ if [ -f "$KERNEL_IMAGE" ]; then
 ⏱️ ${BUILD_DURATION}s  
 🛠 Compiler: \`$COMPILER_VERSION\`  
 🔐 SHA256: \`${ZIP_CHECKSUM:0:8}...\`
-<~---------------------------------------~>"
+~~~< *Kurap1ka Compile* >~~~"
 
         send_telegram_message "🎉 *ZIP Berhasil Dibuat!*"
         send_telegram_file "$ZIP_NAME" "$CAPTION"
