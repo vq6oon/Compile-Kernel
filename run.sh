@@ -4,16 +4,16 @@
 KERNEL_DIR=$(pwd)
 OUT_DIR=$KERNEL_DIR/out
 ANYKERNEL_DIR=$KERNEL_DIR/AnyKernel3
-CONFIG_NAME=(defconfig)
 THREADS=$(nproc --all)
+CONFIG_NAME=xXx_defconfig
 CLANGDIR=""
-DEFCONFIG_FILE="$KERNEL_DIR/arch/arm64/configs/$CONFIG_NAME"
 DEVICE_CODENAME=""
 DEVICE=""
 HOSTNAME=""
 USER=""
 KERNEL_VERSION=""
 KERNEL_NAME=""
+DEFCONFIG_FILE="$KERNEL_DIR/arch/arm64/configs/$CONFIG_NAME"
 
 # Telegram
 BOT_TOKEN=""
@@ -111,13 +111,13 @@ if [ -f "$KERNEL_IMAGE" ]; then
         COMPILER_VERSION=$("$CLANGDIR/bin/clang" --version | head -n1)
         KERNEL_VERSION=$KERNEL_VERSION
         
-        CAPTION=" ⏱️ $KERNEL_NAME Success ${BUILD_DURATION}s  
-🖥️ *Made By:* \`$MAKER\`  
-🖥️ *Host:* \`$HOSTNAME\`  
-🧬 *Kernel Name:* \`$KERNEL_NAME\`  
-📱 *Device:* \`$DEVICE ($DEVICE_CODENAME)\`  
-🛠 *Compiler*: \`$COMPILER_VERSION\`  
-🔐 *SHA256*: \`${ZIP_CHECKSUM:0:8}...\`
+        CAPTION=" $KERNEL_NAME Build Success ${BUILD_DURATION}s  
+
+*Made By:*‎ $USER  
+*Host:*‎ $HOSTNAME  
+*Device:*‎ $DEVICE ($DEVICE_CODENAME)  
+*Kernel Version*:‎ $KERNEL_VERSION  
+*Compiler:*‎ $COMPILER_VERSION  
 ~~~< *Lamp1on Compiler* >~~~"
 
 #        send_telegram_message "🎉 *ZIP Berhasil Dibuat!*"
