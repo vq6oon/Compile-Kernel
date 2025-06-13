@@ -4,14 +4,16 @@
 KERNEL_DIR=$(pwd)
 OUT_DIR=$KERNEL_DIR/out
 ANYKERNEL_DIR=$KERNEL_DIR/AnyKernel3
-CONFIG_NAME=merlin_defconfig
+CONFIG_NAME=(defconfig)
 THREADS=$(nproc --all)
 CLANGDIR=""
 DEFCONFIG_FILE="$KERNEL_DIR/arch/arm64/configs/$CONFIG_NAME"
-DEVICE_CODENAME="merlin"
+DEVICE_CODENAME=""
+DEVICE=""
 HOSTNAME=""
 USER=""
 KERNEL_VERSION=""
+KERNEL_NAME=""
 
 # Telegram
 BOT_TOKEN=""
@@ -38,9 +40,9 @@ send_telegram_file() {
 }
 
 # Ambil LOCALVERSION
-RAW_LOCALVERSION=$(grep -oP 'CONFIG_LOCALVERSION="\K[^"]+' "$DEFCONFIG_FILE")
-KERNEL_NAME=$(echo "$RAW_LOCALVERSION" | sed 's/^-//')
-[ -z "$KERNEL_NAME" ] && KERNEL_NAME="CustomKernel"
+# RAW_LOCALVERSION=$(grep -oP 'CONFIG_LOCALVERSION="\K[^"]+' "$DEFCONFIG_FILE")
+# KERNEL_NAME=$(echo "$RAW_LOCALVERSION" | sed 's/^-//')
+# [ -z "$KERNEL_NAME" ] && KERNEL_NAME="CustomKernel"
 
 # Fix Double Kernel
     rm -rf "$ANYKERNEL_DIR"
@@ -59,7 +61,7 @@ export PATH="$CLANGDIR/bin:$PATH"
 
 # Info awal
 send_telegram_message "
-~~~< *Kurap1ka CompileR* >~~~
+~~~< *Lamp1on Compiler* >~~~
 🔧 *Build Kernel Dimulai!*  
 📱 Device: \`$DEVICE_CODENAME\`  
 🖥️ Host: \`$HOSTNAME\`  
@@ -100,7 +102,7 @@ if [ -f "$KERNEL_IMAGE" ]; then
     cp "$KERNEL_IMAGE" "$ANYKERNEL_DIR/Image.gz-dtb"
 
     cd "$ANYKERNEL_DIR" || exit 1
-    ZIP_NAME="$KERNEL_VERSION-${KERNEL_NAME}-$DEVICE_CODENAME-$(date +%Y%m%d-%H%M).zip"
+    ZIP_NAME="$KERNEL_VERSION-$KERNEL_NAME-$DEVICE_CODENAME-$(date +%Y%m%d-%H%M).zip"
     zip -r9 "$ZIP_NAME" * > /dev/null 2>&1
 
     if [ -f "$ZIP_NAME" ]; then
@@ -109,20 +111,16 @@ if [ -f "$KERNEL_IMAGE" ]; then
         COMPILER_VERSION=$("$CLANGDIR/bin/clang" --version | head -n1)
         KERNEL_VERSION=$KERNEL_VERSION
         
-        CAPTION="✅ *Build Selesai Bang!!!*  
+        CAPTION=" ⏱️ $KERNEL_NAME Success ${BUILD_DURATION}s  
 🖥️ *Made By:* \`$MAKER\`  
 🖥️ *Host:* \`$HOSTNAME\`  
 🧬 *Kernel Name:* \`$KERNEL_NAME\`  
-📱 *Device:* \`$DEVICE_CODENAME\`  
-🧾 *Kernel Version:* \`$KERNEL_VERSION\`
+📱 *Device:* \`$DEVICE ($DEVICE_CODENAME)\`  
+🛠 *Compiler*: \`$COMPILER_VERSION\`  
+🔐 *SHA256*: \`${ZIP_CHECKSUM:0:8}...\`
+~~~< *Lamp1on Compiler* >~~~"
 
-📦 \`$ZIP_NAME\` ($ZIP_SIZE)  
-⏱️ ${BUILD_DURATION}s  
-🛠 Compiler: \`$COMPILER_VERSION\`  
-🔐 SHA256: \`${ZIP_CHECKSUM:0:8}...\`
-~~~< *Kurap1ka Compile* >~~~"
-
-        send_telegram_message "🎉 *ZIP Berhasil Dibuat!*"
+#        send_telegram_message "🎉 *ZIP Berhasil Dibuat!*"
         send_telegram_file "$ZIP_NAME" "$CAPTION"
     else
         send_telegram_message "❌ *Gagal membuat ZIP!*"
