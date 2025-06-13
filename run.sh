@@ -61,12 +61,12 @@ export PATH="$CLANGDIR/bin:$PATH"
 
 # Info awal
 send_telegram_message "
-~~~< *Lamp1on Compiler* >~~~
-🔧 *Build Kernel Dimulai!*  
-📱 Device: \`$DEVICE_CODENAME\`  
-🖥️ Host: \`$HOSTNAME\`  
-🧬 Kernel Name: \`$KERNEL_NAME\`  
-⚙️ Defconfig: \`$CONFIG_NAME\`"
+~~~< *Lamp1on Compiler Start* >~~~
+
+Device:‎  \`$DEVICE_CODENAME\`  
+Host:‎  \`$HOSTNAME\`  
+Kernel Name:‎  \`$KERNEL_NAME\`  
+Defconfig:‎  \`$CONFIG_NAME\`"
 
 # Waktu mulai
 BUILD_START=$(date +%s)
@@ -118,7 +118,7 @@ if [ -f "$KERNEL_IMAGE" ]; then
 *Device:*‎ $DEVICE ($DEVICE_CODENAME)  
 *Kernel Version*:‎ $KERNEL_VERSION  
 *Compiler:*‎ $COMPILER_VERSION  
-~~~< *Lamp1on Compiler* >~~~"
+~~~< *Lamp1on Compiler End* >~~~"
 
 #        send_telegram_message "🎉 *ZIP Berhasil Dibuat!*"
         send_telegram_file "$ZIP_NAME" "$CAPTION"
