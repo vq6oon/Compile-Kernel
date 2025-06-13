@@ -62,11 +62,10 @@ export PATH="$CLANGDIR/bin:$PATH"
 # Info awal
 send_telegram_message "
 ~~~< *Lamp1on Compiler Start* >~~~
-
-Device:‎  \`$DEVICE_CODENAME\`  
-Host:‎  \`$HOSTNAME\`  
-Kernel Name:‎  \`$KERNEL_NAME\`  
-Defconfig:‎  \`$CONFIG_NAME\`"
+*Device:‎*  \`$DEVICE_CODENAME\`  
+*Host:‎*  \`$HOSTNAME\`  
+*Kernel Name:*‎  \`$KERNEL_NAME\`  
+*Defconfig:‎*  \`$CONFIG_NAME\`"
 
 # Waktu mulai
 BUILD_START=$(date +%s)
@@ -128,5 +127,5 @@ else
     send_telegram_message "❌ *Build Gagal!* Tidak ditemukan *Image.gz* atau *DTB*!  
 📤 Mengirim *build.log*..."
     send_telegram_file "$KERNEL_DIR/out/compile.log" "⚠️ *Log Build Gagal*
-    ~~~< *Lamp1on Compiler End* >~~~""
+~~~< *Lamp1on Compiler End* >~~~""
 fi
