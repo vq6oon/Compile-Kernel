@@ -5,7 +5,7 @@ KERNEL_DIR=$(pwd)
 OUT_DIR=$KERNEL_DIR/out
 ANYKERNEL_DIR=$KERNEL_DIR/AnyKernel3
 THREADS=$(nproc --all)
-CONFIG_NAME=xXx_defconfig
+CONFIG_NAME=
 CLANGDIR=""
 DEVICE_CODENAME=""
 DEVICE=""
@@ -113,11 +113,11 @@ if [ -f "$KERNEL_IMAGE" ]; then
         
         CAPTION=" $KERNEL_NAME Build Success ${BUILD_DURATION}s  
 
-*Made By:*‎ $USER  
-*Host:*‎ $HOSTNAME  
-*Device:*‎ $DEVICE ($DEVICE_CODENAME)  
-*Kernel Version*:‎ $KERNEL_VERSION  
-*Compiler:*‎ $COMPILER_VERSION  
+*Made By:*‎  $USER  
+*Host:*‎  $HOSTNAME  
+*Device:*‎  $DEVICE ($DEVICE_CODENAME)  
+*Kernel Version*:‎  $KERNEL_VERSION  
+*Compiler:*‎  $COMPILER_VERSION  
 ~~~< *Lamp1on Compiler End* >~~~"
 
 #        send_telegram_message "🎉 *ZIP Berhasil Dibuat!*"
@@ -128,5 +128,6 @@ if [ -f "$KERNEL_IMAGE" ]; then
 else
     send_telegram_message "❌ *Build Gagal!* Tidak ditemukan *Image.gz* atau *DTB*!  
 📤 Mengirim *build.log*..."
-    send_telegram_file "$KERNEL_DIR/out/compile.log" "⚠️ *Log Build Gagal*"
+    send_telegram_file "$KERNEL_DIR/out/compile.log" "⚠️ *Log Build Gagal*
+    ~~~< *Lamp1on Compiler End* >~~~""
 fi
