@@ -111,8 +111,7 @@ if [ -f "$KERNEL_IMAGE" ]; then
         COMPILER_VERSION=$("$CLANGDIR/bin/clang" --version | head -n1)
         KERNEL_VERSION=$KERNEL_VERSION
         
-        CAPTION=" $KERNEL_NAME Build Success ${BUILD_DURATION}s  
-
+        CAPTION=" *-->$KERNEL_NAME Build Success ${BUILD_DURATION}s*  
 *Made By:*‎  $USER  
 *Host:*‎  $HOSTNAME  
 *Device:*‎  $DEVICE ($DEVICE_CODENAME)  
