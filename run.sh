@@ -10,14 +10,10 @@ CLANGDIR=""
 DEFCONFIG_FILE="$KERNEL_DIR/arch/arm64/configs/$CONFIG_NAME"
 DEVICE_CODENAME="merlin"
 HOSTNAME=""
-MAKER=""
+USER=""
 KERNEL_VERSION=""
 
 # Telegram
-BOT_TOKEN=""
-CHAT_ID=""
-
-# Telegram Ke Grub
 BOT_TOKEN=""
 CHAT_ID=""
 MESSAGE_THREAD_ID=""
@@ -55,7 +51,7 @@ rm -rf "$OUT_DIR"
 mkdir -p "$OUT_DIR"
 
 # Export build env
-export KBUILD_BUILD_USER="$MAKER"
+export KBUILD_BUILD_USER="$USER"
 export KBUILD_BUILD_HOST="$HOSTNAME"
 export USE_CCACHE=1
 ccache -M 30G
@@ -63,7 +59,7 @@ export PATH="$CLANGDIR/bin:$PATH"
 
 # Info awal
 send_telegram_message "
-~~~< *Kurap1ka Compile* >~~~
+~~~< *Kurap1ka CompileR* >~~~
 🔧 *Build Kernel Dimulai!*  
 📱 Device: \`$DEVICE_CODENAME\`  
 🖥️ Host: \`$HOSTNAME\`  
