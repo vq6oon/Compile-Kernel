@@ -46,7 +46,7 @@ send_telegram_file() {
 
 # Fix Double Kernel
     rm -rf "$ANYKERNEL_DIR"
-    git clone https://github.com/vq6oon/AnyKernel3 -b merlinx "$ANYKERNEL_DIR"
+    git clone https://github.com/vq6oon/AnyKernel3 -b $DEVICE_CODENAME "$ANYKERNEL_DIR"
 
 # Bersihkan output lama
 rm -rf "$OUT_DIR"
