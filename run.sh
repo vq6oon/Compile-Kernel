@@ -127,5 +127,5 @@ else
     send_telegram_message "❌ *Build Gagal!* Tidak ditemukan *Image.gz* atau *DTB*!  
 📤 Mengirim *build.log*..."
     send_telegram_file "$KERNEL_DIR/out/compile.log" "⚠️ *Log Build Gagal*
-~~~< *Lamp1on Compiler End* >~~~""
+~~~< *Lamp1on Compiler End* >~~~"
 fi
