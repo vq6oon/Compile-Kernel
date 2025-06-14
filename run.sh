@@ -5,14 +5,14 @@ KERNEL_DIR=$(pwd)
 OUT_DIR=$KERNEL_DIR/out
 ANYKERNEL_DIR=$KERNEL_DIR/AnyKernel3
 THREADS=$(nproc --all)
-CONFIG_NAME=
-CLANGDIR=""
-DEVICE_CODENAME=""
-DEVICE=""
-HOSTNAME=""
-USER=""
-KERNEL_VERSION=""
-KERNEL_NAME=""
+CONFIG_NAME=merlin_defconfig
+CLANGDIR="/home/vq6oon/clang"
+DEVICE_CODENAME="merlin"
+DEVICE="Redmi Note 9"
+HOSTNAME="penguin"
+USER="vq6oon"
+KERNEL_VERSION="4.14.356-SukiSU"
+KERNEL_NAME="Lamp1onKernel"
 DEFCONFIG_FILE="$KERNEL_DIR/arch/arm64/configs/$CONFIG_NAME"
 
 # Telegram
