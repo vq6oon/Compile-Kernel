@@ -4,7 +4,7 @@
 KERNEL_DIR=$(pwd)
 OUT_DIR=$KERNEL_DIR/out
 ANYKERNEL_DIR=$KERNEL_DIR/AnyKernel3
-THREADS=$(nproc --all)
+#THREADS=$(nproc --all)
 CONFIG_NAME=
 CLANGDIR=""
 DEVICE_CODENAME=""
@@ -53,11 +53,13 @@ rm -rf "$OUT_DIR"
 mkdir -p "$OUT_DIR"
 
 # Export build env
-export KBUILD_BUILD_USER="$USER"
-export KBUILD_BUILD_HOST="$HOSTNAME"
-export USE_CCACHE=1
-ccache -M 30G
-export PATH="$CLANGDIR/bin:$PATH"
+export ARCH=arm64
+export SUBARCH=arm64
+export CLANG_PATH=/workspaces/ubuntu/toolchains
+export PATH=$CLANG_PATH/bin:$PATH
+export KERNEL_DIR=/workspaces/ubuntu/begonia
+export DEFCONFIG=begonia_defconfig
+export OUTDIR=$KERNEL_DIR/out
 
 # Info awal
 send_telegram_message "
@@ -71,24 +73,19 @@ send_telegram_message "
 BUILD_START=$(date +%s)
 
 # Build & log
-make O=out ARCH=arm64 $CONFIG_NAME
-make -j"$THREADS" O=out LLVM=1 LLVM_IAS=1 \
-  ARCH=arm64 \
-  CC=clang \
-  LD=ld.lld \
-  AR=llvm-ar \
-  AS=llvm-as \
-  NM=llvm-nm \
-  STRIP=llvm-strip \
-  OBJCOPY=llvm-objcopy \
-  OBJDUMP=llvm-objdump \
-  READELF=llvm-readelf \
-  HOSTCC=clang \
-  HOSTCXX=clang++ \
-  HOSTAR=llvm-ar \
-  HOSTLD=ld.lld \
-  CROSS_COMPILE=aarch64-linux-gnu- \
-  CROSS_COMPILE_ARM32=arm-linux-gnueabi- | tee -a out/compile.log
+make O=$OUTDIR $DEFCONFIG
+make -j$(nproc) \
+    O=$OUTDIR \
+    ARCH=arm64 \
+    CC=clang \
+    LD=ld.lld \
+    AR=llvm-ar \
+    NM=llvm-nm \
+    OBJCOPY=llvm-objcopy \
+    OBJDUMP=llvm-objdump \
+    STRIP=llvm-strip \
+    CROSS_COMPILE=aarch64-linux-gnu- \
+    CROSS_COMPILE_ARM32=arm-linux-gnueabi-
 
 # Waktu selesai
 BUILD_END=$(date +%s)
