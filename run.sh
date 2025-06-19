@@ -55,10 +55,10 @@ mkdir -p "$OUT_DIR"
 # Export build env
 export ARCH=arm64
 export SUBARCH=arm64
-export CLANG_PATH=/workspaces/ubuntu/toolchains
+export CLANG_PATH=$CLANGDIR
 export PATH=$CLANG_PATH/bin:$PATH
-export KERNEL_DIR=/workspaces/ubuntu/begonia
-export DEFCONFIG=begonia_defconfig
+export KERNEL_DIR=$KERNEL_DIR
+export DEFCONFIG=$CONFIG_NAME
 export OUTDIR=$KERNEL_DIR/out
 
 # Info awal
